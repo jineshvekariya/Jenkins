@@ -26,7 +26,7 @@ pipeline{
 
         stage('Container Create'){
             steps{
-                sh "docker run -dit --name ${parames:ContainerPort} -p ${parames:ContainerPort}:80 ${parames:ImageName}:${parames:ImageTag}"
+                sh "docker run -dit --name ${parames:ContainerName} -p ${parames:ContainerPort}:80 ${parames:ImageName}:${parames:ImageTag}"
             }
         }
     }
