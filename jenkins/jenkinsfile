@@ -2,6 +2,14 @@ pipeline{
     agent{
         label 'devops'
     }
+
+    parameters{
+        string(name: 'ImageName', defaultValue: 'jenkinsapp')
+        string(name: 'ImageTag', defaultValue: 'latest')
+        string(name: 'ContainerPort', defaultValue: '8088')
+        string(name: 'ContainerName', defaultValue: 'jenkinsappcontainer')
+    }
+
     stages{
         stage('App Code Checkout') {
             steps{
@@ -12,13 +20,13 @@ pipeline{
         stage('Build Image') {
             steps{
                 sh 'ls -la'
-                sh 'docker build -t jenkinsapp:latest .'
+                sh "docker build -t ${parames:ImageName}:${parames:ImageTag} ."
             }
         }
 
         stage('Container Create'){
             steps{
-                sh 'docker run -dit --name jenkinsappcontainer -p 8088:80 jenkinsapp:latest'
+                sh "docker run -dit --name ${parames:ContainerPort} -p ${parames:ContainerPort}:80 ${parames:ImageName}:${parames:ImageTag}"
             }
         }
     }
