@@ -1,0 +1,18 @@
+pipeline{
+    agent{
+        label 'devops'
+    }
+    stages{
+        stage('App Code Checkout') {
+            steps{
+                git url: 'https://github.com/jineshvekariya/jenkins.git', branch: 'master'    
+            }  
+        }
+
+        stage('Build Image') {
+            steps{
+                sh 'docker build -t jenkinsapp:latest .'
+            }
+        }
+    }
+}
