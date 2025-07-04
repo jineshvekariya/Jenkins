@@ -38,13 +38,13 @@ pipeline{
                 sh "docker tag ${parames:ImageName}:${parames:ImageTag} $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
                 sh "docker push $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
                 sh "docker rmi -f ${parames:ImageName}:${parames:ImageTag}"
-                sh "docker rmi -f $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
+           //   sh "docker rmi -f $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
             }
         }
 
         stage('Container Create'){
             steps{
-                sh "docker rm -f ${parames:ContainerName}"
+            //  sh "docker rm -f ${parames:ContainerName}"
                 sh "docker run -dit --name ${parames:ContainerName} -p ${parames:ContainerPort}:80 $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
             }
         }
