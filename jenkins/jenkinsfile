@@ -15,7 +15,7 @@ pipeline{
     }
 
     environment{
-        DOCKER_REGISTRY_CREDS = credeentials('docker-registry-login')
+        DOCKER_REGISTRY_CREDS = credentials('docker-registry-login')
     }
 
     stages{
