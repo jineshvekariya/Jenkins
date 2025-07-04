@@ -37,7 +37,7 @@ pipeline{
                 sh "docker login -u $DOCKER_REGISTRY_CREDS_USR -p $DOCKER_REGISTRY_CREDS_PSW"
                 sh "docker tag ${parames:ImageName}:${parames:ImageTag} $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
                 sh "docker push $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
-                sh "docker rm -f ${parames:ImageName}:${parames:ImageTag}"
+                sh "docker rmi -f ${parames:ImageName}:${parames:ImageTag}"
                 sh "docker rm -f $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
             }
         }
