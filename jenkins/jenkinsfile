@@ -17,7 +17,7 @@ pipeline{
 
     environment{
         DOCKER_REGISTRY_CREDS = credentials('docker-registry-login')
-        SONAR-SCANNER = tool 'sonar-scanner'
+        SONAR_SCANNER_HOME = tool 'sonar-scanner'
     }
 
     stages{
@@ -31,7 +31,7 @@ pipeline{
             steps{
                 dir('/src'){
                     withSonarQubeEnv('sonar-scanner') {
-                        sh ''' $SONAR_SCANNER/bin/sonar-scanner \
+                        sh ''' $SONAR_SCANNER_HOME/bin/sonar-scanner \
                         -Dsonar.projectName=jenkins-docker-pipeline1 \
                         -Dsonar.python.version=3.11 \
                         -Dsonar.projectKey=jenkins-docker-pipeline1 '''
