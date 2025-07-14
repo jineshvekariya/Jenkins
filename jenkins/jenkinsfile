@@ -9,32 +9,32 @@ pipeline{
     // }
 
     parameters{
-        string(name: 'ImageName', defaultValue: 'jenkinsapp')
-        string(name: 'ImageTag', defaultValue: 'latest')
-        string(name: 'ContainerPort', defaultValue: '8088')
-        string(name: 'ContainerName', defaultValue: 'jenkinsappcontainer')
+        string(name: 'ImageName', defaultValue: 'springboot')
+        string(name: 'ImageTag', defaultValue: 'javaapp')
+        string(name: 'ContainerPort', defaultValue: '8089')
+        string(name: 'ContainerName', defaultValue: 'springbootapptest')
     }
 
     environment{
         DOCKER_REGISTRY_CREDS = credentials('docker-registry-login')
-        SONAR-SCANNER = tool 'sonar-scanner'
+        SONAR_SCANNER_HOME = tool 'sonar-scanner'
     }
 
     stages{
         stage('App Code Checkout') {
             steps{
-                git url: 'https://github.com/jineshvekariya/jenkins.git', branch: 'main'    
+                git url: 'https://github.com/jineshvekariya/jenkins.git', branch: 'springapp1'    
             }  
         }
 
         stage('Sonar Analysis'){
             steps{
-                dir('/src'){
+                dir('src/'){
                     withSonarQubeEnv('sonar-scanner') {
-                        sh ''' $SONAR_SCANNER/bin/sonar-scanner \
-                        -Dsonar.projectName=jenkins-docker-pipeline1 \
-                        -Dsonar.python.version=3.11 \
-                        -Dsonar.projectKey=jenkins-docker-pipeline1 '''
+                        sh ''' $SONAR_SCANNER_HOME/bin/sonar-scanner \
+                        -Dsonar.projectName=jenkins-springboot-pipeline1 \
+                        -Dsonar.projectKey=jenkins-springboot-pipeline1 '''
+                    }
                 }
             }
         }
@@ -70,5 +70,5 @@ pipeline{
                 sh "docker run -dit --name ${parames:ContainerName} -p ${parames:ContainerPort}:80 $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
             }
         }
-    }
+    } 
 }
