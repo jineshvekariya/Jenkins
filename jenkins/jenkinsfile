@@ -8,12 +8,12 @@ pipeline{
         // buildDiscarder(logRotator(numToKeepStr: '3'))
     // }
 
-    parameters{
-        string(name: 'ImageName', defaultValue: 'springboot')
-        string(name: 'ImageTag', defaultValue: 'javaapp')
-        string(name: 'ContainerPort', defaultValue: '8089')
-        string(name: 'ContainerName', defaultValue: 'springbootapptest')
-    }
+    // parameters{
+    //     string(name: 'ImageName', defaultValue: 'springboot')
+    //     string(name: 'ImageTag', defaultValue: 'javaapp')
+    //     string(name: 'ContainerPort', defaultValue: '8089')
+    //     string(name: 'ContainerName', defaultValue: 'springbootapptest')
+    // }
 
     environment{
         DOCKER_REGISTRY_CREDS = credentials('docker-registry-login')
@@ -46,29 +46,29 @@ pipeline{
                 }
             }
         }
+    }
+} 
+//         stage('Build Image') {
+//             steps{
+//                 sh 'ls -la'
+//                 sh "docker build -t ${parames:ImageName}:${parames:ImageTag} ."
+//             }
+//         }
 
-        stage('Build Image') {
-            steps{
-                sh 'ls -la'
-                sh "docker build -t ${parames:ImageName}:${parames:ImageTag} ."
-            }
-        }
+//         stage('Push to Registry'){
+//             steps{
+//                 sh "docker login -u $DOCKER_REGISTRY_CREDS_USR -p $DOCKER_REGISTRY_CREDS_PSW"
+//                 sh "docker tag ${parames:ImageName}:${parames:ImageTag} $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
+//                 sh "docker push $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
+//                 sh "docker rmi -f ${parames:ImageName}:${parames:ImageTag}"
+//                 // sh "docker rmi -f $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
+//             }
+//         }
 
-        stage('Push to Registry'){
-            steps{
-                sh "docker login -u $DOCKER_REGISTRY_CREDS_USR -p $DOCKER_REGISTRY_CREDS_PSW"
-                sh "docker tag ${parames:ImageName}:${parames:ImageTag} $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
-                sh "docker push $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
-                sh "docker rmi -f ${parames:ImageName}:${parames:ImageTag}"
-                // sh "docker rmi -f $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
-            }
-        }
-
-        stage('Container Create'){
-            steps{
-                // sh "docker rm -f ${parames:ContainerName}"
-                sh "docker run -dit --name ${parames:ContainerName} -p ${parames:ContainerPort}:80 $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
-            }
-        }
-    } 
-}
+//         stage('Container Create'){
+//             steps{
+//                 // sh "docker rm -f ${parames:ContainerName}"
+//                 sh "docker run -dit --name ${parames:ContainerName} -p ${parames:ContainerPort}:80 $DOCKER_REGISTRY_CREDS_USR/${parames:ImageName}:${parames:ImageTag}"
+//             }
+//         }
+//     } 
