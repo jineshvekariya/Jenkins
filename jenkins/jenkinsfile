@@ -32,11 +32,11 @@ pipeline{
             steps{
                 dir('src/'){
                     withSonarQubeEnv('sonar-scanner') {
-                        sh ''' $SONAR_SCANNER_HOME/bin/sonar-scanner \
+                        sh """ $SONAR_SCANNER_HOME/bin/sonar-scanner \
                         -Dsonar.projectName=jenkins-docker-pipeline1 \
                         -Dsonar.python.version=3.11 \
                         -Dsonar.projectKey=jenkins-docker-pipeline1 \
-                        -Dsonar.login=${SONAR_TOKEN} '''
+                        -Dsonar.login=${SONAR_TOKEN} """
                     }
                 }
             }
