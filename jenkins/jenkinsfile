@@ -48,10 +48,24 @@ pipeline{
             }
         }
 
+        stage("Trivy ScanFS"){
+            steps{
+                dir('src/'){
+                    sh "trivy fs . >> /tmp/trivyfsreport.txt"
+                }   
+            }
+        }
+
         stage('Build Image') {
             steps{
                 sh 'ls -la'
                 sh "docker build -t ${parames:ImageName}:${parames:ImageTag} ."
+            }
+        }
+
+        stage('Trivy ImageScan'){
+            steps{
+                sh "trivy image ${parames:ImageName}:${parames:ImageTag} >> /tmp/trivy_image_scan_report.txt"
             }
         }
 
