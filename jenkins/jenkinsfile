@@ -31,7 +31,7 @@ pipeline{
             steps{
                 dir('src/'){
                     withSonarQubeEnv('sonar-scanner') {
-                        withCredentials([string(credentialsId: 'sonar-token-server', variable: 'SONAR_TOKEN')]) {
+                        withCredentials([string(credentialsId: 'sonar-token-client', variable: 'SONAR_TOKEN')]) {
                             sh ''' 
                                 $SONAR_SCANNER_HOME/bin/sonar-scanner \
                                 -Dsonar.projectName=jenkins-docker-pipeline1 \
@@ -48,7 +48,7 @@ pipeline{
         stage("Quality Gate"){
             steps{
                 timeout(time: 1, unit: 'HOURS'){
-                    waitForQualityGate abortPipeline: true, credentialsId: 'sonar-token-server' 
+                    waitForQualityGate abortPipeline: true, credentialsId: 'sonar-token-client' 
                 }
             }
         }
