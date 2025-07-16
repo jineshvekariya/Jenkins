@@ -33,11 +33,11 @@ pipeline{
                     withSonarQubeEnv('sonar-scanner') {
                         withCredentials([string(credentialsId: 'sonar-token-client', variable: 'SONAR_TOKEN')]) {
                             sh ''' 
-                                $SONAR_SCANNER_HOME/bin/sonar-scanner \
+                            $SONAR_SCANNER_HOME/bin/sonar-scanner \
                                 -Dsonar.projectName=jenkins-docker-pipeline1 \
                                 -Dsonar.python.version=3.11 \
                                 -Dsonar.projectKey=jenkins-docker-pipeline1 \
-                                -Dsonar.token=$SONAR_TOKEN
+                                -Dsonar.login=$SONAR_TOKEN
                             '''
                         }
                     }
